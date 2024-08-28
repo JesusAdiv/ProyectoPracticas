@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { FaChalkboardTeacher } from "react-icons/fa";
 import { IoTimeOutline } from "react-icons/io5";
+import { BsQrCodeScan } from "react-icons/bs";
 import { HiMenuAlt3 } from "react-icons/hi";
 
 
@@ -9,6 +10,7 @@ export default function Sidebar() {
   const menus = [
     { name: "Clases", link: "/profesor", icon: FaChalkboardTeacher },
     { name: "Historico", link: "/profesor/historico", icon: IoTimeOutline },
+    { name: "Codigo_Qr", link: "/profesor/qr_code", icon: BsQrCodeScan },
   ];
   const [open, setOpen] = useState(false);
   return (

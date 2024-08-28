@@ -24,6 +24,7 @@ import Profesores from "./pages/profesores";
 //Profesor
 import Error404 from "./pages/error404";
 import Historico from "./pages/historico"
+import QrCode from "./pages/qrCode"
 import Alumnos from "./pages/alumnos";
 import Login from "./pages/login";
 import HomeProfesor from "./pages/homepageProfesor";
@@ -55,6 +56,7 @@ export default function App() {
        <Route path="/profesor" element={<LayoutProfesor/>}>
         <Route index element ={<HomeProfesor email=""/>}/>
         <Route path="historico" element ={<Historico/>}/>
+        <Route path="qr_code" element ={<QrCode/>}/>
         <Route path="alumnos" element={<Alumnos/>}/>
         <Route path="asistencias" element={<Asistencias/>}/>
         <Route path="entregas" element={<Entregas/>}>
