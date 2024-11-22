@@ -1,20 +1,19 @@
-# Usa la imagen oficial de Node.js
 FROM node:18
 
-# Directorio de trabajo dentro del contenedor
+# Crear el directorio de trabajo dentro del contenedor
 WORKDIR /app
 
-# Copia el package.json y package-lock.json antes de copiar todo el proyecto
-COPY package.json package-lock.json ./
+# Copiar package.json y package-lock.json
+COPY package*.json ./
 
-# Forzar la instalación de dependencias con --legacy-peer-deps
-RUN npm install --legacy-peer-deps
+# Instalar las dependencias
+RUN npm install
 
-# Copia todos los archivos de tu proyecto
+# Copiar el resto de los archivos
 COPY . .
 
-# Expone el puerto 5173 para tu aplicación React
+# Exponer el puerto
 EXPOSE 5173
 
-# Ejecuta la aplicación en el contenedor
-CMD ["npm", "start"]
+# Comando para ejecutar la aplicación
+CMD ["npm", "run", "dev"]
