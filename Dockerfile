@@ -2,6 +2,7 @@
 FROM node:20.13.1 As build
 WORKDIR /app
 COPY package*.json ./
+RUN npm ci --legacy-peer-deps
 # like npm install but get all the specific versions what you have
 RUN npm ci
 ENV NODE_OPTIONS=--max-old-space-size=4096
