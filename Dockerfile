@@ -1,33 +1,29 @@
-# Usa la imagen base de Python
-FROM python:3.12.3
+# Usa una imagen base de Node.js para construir el proyecto
+FROM node:18 as build
 
-# Instala locales y configura es_ES.utf8
-RUN apt-get update && \
-    apt-get install -y locales && \
-    sed -i '/es_ES.UTF-8/s/^# //g' /etc/locale.gen && \
-    locale-gen
-
-# Establece el locale como variables de entorno
-ENV LANG es_ES.UTF-8
-ENV LANGUAGE es_ES:es
-ENV LC_ALL es_ES.UTF-8
-
-# Establecemos el directorio de trabajo
+# Establece el directorio de trabajo en el contenedor
 WORKDIR /app
 
-# Copiamos el archivo de dependencias y lo instalamos
-COPY requirements.txt .
-RUN pip install --no-cache-dir -r requirements.txt
+# Copia el package.json y package-lock.json al contenedor
+COPY package*.json ./
 
-# Copiamos el resto del código
-COPY . .
+# Instala las dependencias del proyecto
+RUN npm install
 
-# Exponemos el puerto de la aplicación
-EXPOSE 8000
+# Copia todo el código fuente al contenedor
+COPY . ./
 
-# Entrypoint script para ejecutar migraciones y el servidor
-COPY entrypoint.sh /entrypoint.sh
-RUN chmod +x /entrypoint.sh
+# Construye la aplicación para producción
+RUN npm run build
 
-# Comando de ejecución
-ENTRYPOINT ["/entrypoint.sh"]
+# Usa una imagen ligera de Nginx para servir los archivos estáticos
+FROM nginx:alpine
+
+# Copia los archivos construidos al directorio predeterminado de Nginx
+COPY --from=build /app/build /usr/share/nginx/html
+
+# Exponer el puerto 80 para servir el frontend
+EXPOSE 80
+
+# Comando predeterminado para iniciar Nginx
+CMD ["nginx", "-g", "daemon off;"]
