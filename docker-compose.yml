@@ -1,11 +1,11 @@
-version: '0.1.0'
+version: '3.5'
 services:
-  web:
-    build: .
-    command: python manage.py runserver 0.0.0.0:8000
+  app:
+    image: node:18
     volumes:
-      - .:/app
+      - ./:/app
+    working_dir: /app
     ports:
-      - "8000:8000"
-    environment:
-      - DEV=1
+      - "5173:5173"
+    command: npm start
+     

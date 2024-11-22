@@ -1,29 +1,20 @@
-# Usa una imagen base de Node.js
-FROM node:16
+# Usa la imagen oficial de Node.js
+FROM node:18
 
-# Establece el directorio de trabajo
+# Establece el directorio de trabajo en el contenedor
 WORKDIR /app
 
-# Copia el package.json y el package-lock.json
+# Copia el archivo package.json y package-lock.json (si los tienes)
 COPY package*.json ./
 
-# Instala las dependencias
+# Instala las dependencias de Node.js
 RUN npm install
 
-# Copia el resto de la aplicación
+# Copia el resto de los archivos de la aplicación al contenedor
 COPY . .
 
-# Crea una versión optimizada para producción
-RUN npm run build
+# Expone el puerto que usará la aplicación React (por defecto 5173 para Vite)
+EXPOSE 5173
 
-# Usa una imagen base de Nginx para servir la aplicación
-FROM nginx:alpine
-
-# Copia los archivos generados en el build a la carpeta de Nginx
-COPY --from=0 /app/build /usr/share/nginx/html
-
-# Expone el puerto 80
-EXPOSE 80
-
-# Ejecuta Nginx en primer plano
-CMD ["nginx", "-g", "daemon off;"]
+# Comando para ejecutar la aplicación en modo desarrollo
+CMD ["npm", "start"]
