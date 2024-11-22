@@ -1,20 +1,20 @@
 # Usa la imagen oficial de Node.js
 FROM node:18
 
-# Establece el directorio de trabajo en el contenedor
+# Directorio de trabajo dentro del contenedor
 WORKDIR /app
 
-# Copia el archivo package.json y package-lock.json (si los tienes)
-COPY package*.json ./
+# Copia el package.json y package-lock.json antes de copiar todo el proyecto
+COPY package.json package-lock.json ./
 
-# Instala las dependencias de Node.js
-RUN npm install
+# Forzar la instalación de dependencias con --legacy-peer-deps
+RUN npm install --legacy-peer-deps
 
-# Copia el resto de los archivos de la aplicación al contenedor
+# Copia todos los archivos de tu proyecto
 COPY . .
 
-# Expone el puerto que usará la aplicación React (por defecto 5173 para Vite)
+# Expone el puerto 5173 para tu aplicación React
 EXPOSE 5173
 
-# Comando para ejecutar la aplicación en modo desarrollo
+# Ejecuta la aplicación en el contenedor
 CMD ["npm", "start"]
