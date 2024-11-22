@@ -3,9 +3,11 @@ FROM node:18
 # Crear el directorio de trabajo dentro del contenedor
 WORKDIR /app
 
-# Copiar package.json y package-lock.json
-COPY package*.json ./
+# Copia el package.json y package-lock.json antes de copiar todo el proyecto
+COPY package.json package-lock.json ./
 
+# Forzar la instalación de dependencias con --legacy-peer-deps
+RUN npm install --legacy-peer-deps
 # Instalar las dependencias
 RUN npm install
 
