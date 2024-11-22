@@ -2,7 +2,9 @@
 FROM node:20.13.1 As build
 WORKDIR /app
 COPY package*.json ./
-RUN npm install --force
+# Establecer variable de entorno para aumentar la memoria disponible
+RUN export NODE_OPTIONS="--max-old-space-size=4096" && npm install --force
+RUN npm ci --force
 # like npm install but get all the specific versions what you have
 RUN npm ci
 ENV NODE_OPTIONS=--max-old-space-size=4096
