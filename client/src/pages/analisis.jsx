@@ -89,7 +89,7 @@ function Analisis() {
   const fetchAnalisis = async () => {
     
     try {
-      const response = await fetch(`http://127.0.0.1:8000/api/entregas/tipos/${nrc_clase}/`);
+      const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}entregas/tipos/${nrc_clase}/`);
       if (response.ok) {
         const result = await response.json();
         console.log(result);
@@ -156,7 +156,7 @@ function Analisis() {
 
   const fetchAsistencias = async () => {
     try {
-      const response = await fetch(`http://127.0.0.1:8000/api/api/asistencia_por_clase/${nrc_clase}/`);
+      const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}api/asistencia_por_clase/${nrc_clase}/`);
       if (response.ok) {
         const result = await response.json();
         console.log("Asistencias Rsult: ", result);        
@@ -186,7 +186,7 @@ function Analisis() {
 
   const fetchDistAsist = async () => {
     try {
-      const response = await fetch(`http://127.0.0.1:8000/api/api/distribucion_calificaciones/${nrc_clase}/`);
+      const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}api/distribucion_calificaciones/${nrc_clase}/`);
       if (response.ok) {
         const result = await response.json();
         console.log("distribucion_calificaciones: ", result);        

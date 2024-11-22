@@ -22,7 +22,7 @@ const Asistencias = () => {
   const fetchAsistencias = async (page = 1) => {
     const nrc_clase = dataClase.nrc;
     try {
-      const response = await fetch(`http://127.0.0.1:8000/api/Asistencia/?materia_nrc=${nrc_clase}&page=${page}`);
+      const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}Asistencia/?materia_nrc=${nrc_clase}&page=${page}`);
       if (response.ok) {
         const result = await response.json();
         const orderedAsistencias = result.results.sort((a, b) => new Date(b.fecha) - new Date(a.fecha));
@@ -45,7 +45,7 @@ const Asistencias = () => {
     };
 
     try {
-      const response = await fetch('http://127.0.0.1:8000/api/Asistencia/', {
+      const response = await fetch('${import.meta.env.VITE_BACKEND_URL}Asistencia/', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
